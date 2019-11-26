@@ -8,6 +8,9 @@ VERSION="1.4.3"
 # or run BaTbot with option: -t <token>
 TELEGRAMTOKEN="<your telegram token>";
 
+#chat id added for security reasons                                                                                                                                                                                                                                                                                                                      
+OWNERCHATID="<your telegram owner chat id>";
+
 # how many seconds between check for new messages
 # or run Batbot with option: -c <seconds>
 CHECKNEWMSG=5;
@@ -149,8 +152,12 @@ while true; do
 						CMDORIG=${CMDORIG//@R2/${BASH_REMATCH[2]}};
 						CMDORIG=${CMDORIG//@R3/${BASH_REMATCH[3]}};
 
-						echo "Command ${s} received, running cmd: ${CMDORIG}"
-						CMDOUTPUT=`$CMDORIG`;
+						if [ $CHATID -eq $OWNERCHATID ]; then                                                                                            
+                                                        echo "Command ${s} received, running cmd: ${CMDORIG}"                                                                    
+                                                        CMDOUTPUT=`$CMDORIG`;                                                                                                    
+                                                else                                                                                                                             
+                                                        CMDOUTPUT="Access denied";                                                                                               
+                                                fi
 
 						if [ $FIRSTTIME -eq 1 ]; then
 							echo "old message, i will not send any answer to user.";
